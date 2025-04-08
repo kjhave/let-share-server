@@ -1,13 +1,17 @@
 {
-  "name": "app.js",
+  "name": "let-share",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
   "author": "Khanh Nguyen Ngoc - 20230041 - Hust",
   "type": "commonjs",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "ts-node ./src/index.ts",
+    "dev:watch": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node ./dist/index.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -23,6 +27,9 @@
     "nodemon": "^3.1.9"
   },
   "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
   }
 }
