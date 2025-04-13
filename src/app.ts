@@ -13,8 +13,8 @@ import groupRouter          from './routes/groupRouter';
 
 // Mount routers
 app.use("/authentication", authenticationRouter);
-app.use("/account", accountRouter);
+app.use("/accounts", accountRouter);
 app.use("/contract", contactRouter);
-app.use("/group", groupRouter);
+app.use("/groups", groupRouter);
 
 export default app;
