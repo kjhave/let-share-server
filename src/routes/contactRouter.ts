@@ -1,7 +1,7 @@
 //Router for contract-making function
 
 import express, { Request, Response } from 'express';
-import verifyToken from '../middlewares/VerifyToken';
+import { verifyToken } from '../middlewares/verifyToken';
 
 const router = express.Router();
 

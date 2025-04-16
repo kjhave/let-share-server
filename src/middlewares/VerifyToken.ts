@@ -7,7 +7,7 @@ if (!JWT_SECRET) {
     throw new Error("Missing JWT_SECRET in environment variables.");
 }
 
-const verifyToken = (req: Request, res: Response, next: NextFunction): void => {
+export const verifyToken = (req: Request, res: Response, next: NextFunction): void => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
 
@@ -24,5 +24,3 @@ const verifyToken = (req: Request, res: Response, next: NextFunction): void => {
         res.status(403).json({ message: "Invalid or expired token." });
     }
 };
-
-export default verifyToken;

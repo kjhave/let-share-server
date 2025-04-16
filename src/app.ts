@@ -5,6 +5,9 @@ const app = express();
 // Middleware
 app.use(express.json());
 
+import { verifyPostRequest } from './middlewares/verifyPostRequest';
+app.post("*", verifyPostRequest);
+
 //Import routers
 import authenticationRouter from './routes/authenticationRouter';
 import accountRouter        from './routes/accountRouter';

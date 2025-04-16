@@ -1,6 +1,6 @@
 import { User } from '../models/db/index';
 
-export default async function getUserPassword(username: string): Promise<string | null> {
-    const res = await User.findOne({ where: { username } }).select('password');
+export const getUserPassword = async (username: string): Promise<string | null> => {
+    const res = await User.findOne({ username: username }, { password : 1 });
     return res?.password || null;
 };

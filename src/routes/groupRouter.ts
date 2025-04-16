@@ -1,7 +1,7 @@
 //Router for groups management functions
 
 import express, { Request, Response } from 'express';
-import verifyToken from '../middlewares/VerifyToken';
+import { verifyToken } from '../middlewares/verifyToken';
 
 const router = express.Router();
 
