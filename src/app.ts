@@ -6,6 +6,7 @@ const app = express();
 app.use(express.json());
 
 import { verifyPostRequest } from './middlewares/verifyPostRequest';
+import { verifyToken } from './middlewares/verifyToken';
 app.post("*", verifyPostRequest);
 
 //Import routers
@@ -16,8 +17,8 @@ import groupRouter          from './routes/groupRouter';
 
 // Mount routers
 app.use("/authentication", authenticationRouter);
-app.use("/accounts", accountRouter);
-app.use("/contract", contactRouter);
-app.use("/groups", groupRouter);
+app.use("/accounts", verifyToken, accountRouter);
+app.use("/contract", verifyToken, contactRouter);
+app.use("/groups", verifyToken, groupRouter);
 
 export default app;
