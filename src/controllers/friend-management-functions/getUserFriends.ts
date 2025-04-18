@@ -3,9 +3,9 @@ import { getFriendList } from '../../services/getFriendList';
 import { get } from 'http';
 
 export const getUserFriends = async (req: Request, res: Response): Promise<void> => {
-    const user = res.locals.user;
+    const userId = res.locals.user;
     try {
-        const friends = await getFriendList(user);
+        const friends = await getFriendList(userId);
         res.status(200).json(friends);
     } catch (err){
         console.error(err);

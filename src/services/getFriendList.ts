@@ -1,8 +1,8 @@
 import { User } from "../models/db";
 
-export const getFriendList = async (username: string): Promise<Array<Object>> => {
+export const getFriendList = async (userId: string): Promise<Array<Object>> => {
     try {
-        const user = await User.findOne({username: username})
+        const user = await User.findById(userId)
             .populate({
                 path: "friendList",
                 populate: [
@@ -16,7 +16,7 @@ export const getFriendList = async (username: string): Promise<Array<Object>> =>
         if (!user || !user.friendList) return [];
 
         const friends = user.friendList.map((friendship: any) => {
-            const isUser1 = friendship.userId1._id.toString() === user._id.toString();
+            const isUser1 = friendship.userId1._id.toString() === userId.toString();
             const friend = isUser1 ? friendship.userId2 : friendship.userId1;
             const debt: Number = isUser1 ? friendship.debt : -friendship.debt;
 

@@ -1,7 +1,6 @@
 import { FriendRequest } from "../models/db";
-import { Types }    from "mongoose";
 
-export const getFriendRequestInformation = async (friendRequestId: Types.ObjectId): Promise<Object> => {
+export const getFriendRequestInformation = async (friendRequestId: string): Promise<Object> => {
     try{
         const requestInfor = await FriendRequest.findById(friendRequestId)
             .select('userId1 userId2')

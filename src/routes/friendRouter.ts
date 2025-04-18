@@ -13,8 +13,6 @@ router.get("/requests", FriendManagementFunctions.getUserFriendRequests);
 
 router.post("/requests/send", FriendManagementFunctions.sendFriendRequest);
 
-router.post("/requests/accept", FriendManagementFunctions.acceptFriendRequest);
-
-router.post("/requests/deny", FriendManagementFunctions.denyFriendRequest);
+router.post("/requests/reply", FriendManagementFunctions.replyFriendRequest);
 
 export default router;
