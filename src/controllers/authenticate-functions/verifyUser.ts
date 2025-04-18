@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { getUserPassword } from '../../services/getUserPassword';
 import jwt from 'jsonwebtoken';
+import { getUserId } from '../../services/getUserId';
 
 const JWT_SECRET = process.env.JWT_SECRET as string;
 
@@ -25,7 +26,8 @@ export const verifyUser = async (req: Request, res: Response): Promise<void>  =>
             return;
         }
 
-        const payload = { username };
+        const userId = await getUserId(username);
+        const payload = { userId };
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '15m' });
 
         res.status(200).json({ token });
