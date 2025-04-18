@@ -1,11 +1,10 @@
 //Router for groups management functions
 
 import express, { Request, Response } from 'express';
-import { verifyToken } from '../middlewares/verifyToken';
 
 const router = express.Router();
 
-router.get("/", verifyToken, (req: Request, res: Response) => {
+router.get("/", (req: Request, res: Response) => {
     const user = res.locals.user;
     
     try {
@@ -16,7 +15,7 @@ router.get("/", verifyToken, (req: Request, res: Response) => {
     }
 });
 
-router.post("/create", verifyToken, (req: Request, res: Response) => {
+router.post("/create", (req: Request, res: Response) => {
     const user = res.locals.user;
 
     try {
@@ -27,7 +26,7 @@ router.post("/create", verifyToken, (req: Request, res: Response) => {
     }
 });
 
-router.get("/group/:groupId", verifyToken, (req: Request, res: Response) => {
+router.get("/group/:groupId", (req: Request, res: Response) => {
     const user = res.locals.user;
         
     try {
@@ -39,7 +38,7 @@ router.get("/group/:groupId", verifyToken, (req: Request, res: Response) => {
     }
 });
 
-router.post("/group/:groupId/update", verifyToken, (req: Request, res: Response) => {
+router.post("/group/:groupId/update", (req: Request, res: Response) => {
     const user = res.locals.user;
     
     try {
@@ -50,7 +49,7 @@ router.post("/group/:groupId/update", verifyToken, (req: Request, res: Response)
     }
 });
 
-router.post("/group/:groupId/delete", verifyToken, (req: Request, res: Response) => {
+router.post("/group/:groupId/delete", (req: Request, res: Response) => {
     const user = res.locals.user;
     
     try {
@@ -66,7 +65,7 @@ import billFormRouter from './billFormRouter';
 router.use("/group/:groupId/billForms", billFormRouter);
 
 //Router for contract history functions
-router.get("/contracts", verifyToken, (req: Request, res: Response) => {
+router.get("/contracts", (req: Request, res: Response) => {
     const user = res.locals.user;
     
     try {

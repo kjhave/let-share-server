@@ -2,11 +2,9 @@
 
 import express, {Request, Response } from "express";
 
-import { verifyToken } from "../middlewares/verifyToken";
-
 const router = express.Router();
 
-router.get("/", verifyToken, (req: Request, res: Response) => {
+router.get("/", (req: Request, res: Response) => {
     const user = res.locals.user;
     
     try {
@@ -17,7 +15,7 @@ router.get("/", verifyToken, (req: Request, res: Response) => {
     }
 });
 
-router.post("/create", verifyToken, (req: Request, res: Response) => {
+router.post("/create", (req: Request, res: Response) => {
     const user = res.locals.user;
     
     try {
@@ -28,7 +26,7 @@ router.post("/create", verifyToken, (req: Request, res: Response) => {
     }
 });
 
-router.get("/billForm/:billFormId", verifyToken, (req: Request, res: Response) => {
+router.get("/billForm/:billFormId", (req: Request, res: Response) => {
     const user = res.locals.user;
     
     try {
@@ -40,7 +38,7 @@ router.get("/billForm/:billFormId", verifyToken, (req: Request, res: Response) =
     }
 });
 
-router.get("/billForm/:billFormId/update", verifyToken, (req: Request, res: Response) => {
+router.get("/billForm/:billFormId/update", (req: Request, res: Response) => {
     const user = res.locals.user;
     
     try {
@@ -52,7 +50,7 @@ router.get("/billForm/:billFormId/update", verifyToken, (req: Request, res: Resp
     }
 });
 
-router.get("/billForm/:billFormId/delete", verifyToken, (req: Request, res: Response) => {
+router.get("/billForm/:billFormId/delete", (req: Request, res: Response) => {
     const user = res.locals.user;
     
     try {

@@ -1,11 +1,10 @@
 //Router for contract-making function
 
 import express, { Request, Response } from 'express';
-import { verifyToken } from '../middlewares/verifyToken';
 
 const router = express.Router();
 
-router.post("/", verifyToken, (req: Request, res: Response) => {
+router.post("/", (req: Request, res: Response) => {
     const user = res.locals.user;
     
     try {
