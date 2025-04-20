@@ -1,6 +1,7 @@
 import { FriendRequest } from "../models/db";
+import { IFriendRequest } from "../models/interface";
 
-export const getFriendRequestInformation = async (friendRequestId: string): Promise<Object> => {
+export const getFriendRequestInformation = async (friendRequestId: string): Promise<IFriendRequest> => {
     try{
         const requestInfor = await FriendRequest.findById(friendRequestId)
             .select('userId1 userId2')

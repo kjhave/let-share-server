@@ -1,14 +1,20 @@
 import { Request, Response } from "express";
-import { addFriendRequest } from "../../services/addFriendRequest";
-import { getFriendList } from "../../services/getFriendList";
-import { getFriendRequestList } from "../../services/getFriendRequestList";
-import { getFriendRequestId } from "../../services/getFriendRequestId";
-import { addNewFriend } from "../../services/addNewFriend";
-import { removeFriendRequest } from "../../services/removeFriendRequest";
+import {
+    addFriendRequest, 
+    getFriendRequestList, 
+    getFriendRequestId, 
+    addNewFriend, 
+    removeFriendRequest
+} from "../../services";
+import { isFriend } from "../../utils/isFriend";
 
 export const sendFriendRequest = async (req: Request, res: Response): Promise<void> => {
     const userId = res.locals.user;
     const { friendId } = req.body;
+
+    if (!friendId) {
+        res.status(400).json({ message: "Invalid Request" });
+    }
 
     try {
         //Check if the userId and friendId are the same
@@ -18,9 +24,7 @@ export const sendFriendRequest = async (req: Request, res: Response): Promise<vo
         }
 
         //Check if the userId and friendId are already friends
-        const friends = await getFriendList(userId) as Array<{ _id: string, name: string }>;
-        const isAlreadyFriend = friends.some((friend) => friend._id === friendId);
-
+        const isAlreadyFriend = await isFriend(userId, friendId);
         if (isAlreadyFriend) {
             res.status(400).json({ message: "You are already friends with this user." });
             return;

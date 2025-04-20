@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getFriendRequestList } from '../../services/getFriendRequestList';
+import { getFriendRequestList } from '../../services';
 
 export const getUserFriendRequests = async (req: Request, res: Response): Promise<void> => {
     const userId = res.locals.user;

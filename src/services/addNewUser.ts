@@ -1,4 +1,11 @@
 import { User } from "../models/db";
+import { hash } from "bcryptjs";
+
+const BCRYPT_SALT_ROUNDS = process.env.BCRYPT_SALT_ROUNDS;
+
+if (!BCRYPT_SALT_ROUNDS) {
+    throw new Error("Missing BCRYPT_SALT_ROUNDS in environment variables.");
+}
 
 export const addNewUser = async (
     username: string,
@@ -6,11 +13,12 @@ export const addNewUser = async (
     password: string,
     name: string
 ): Promise<void> => {
+    const hashedPassword = await hash(password, BCRYPT_SALT_ROUNDS);
     try{
         await User.create({
             username: username,
             email: email,
-            password: password,
+            password: hashedPassword,
             name: name
         });
     }

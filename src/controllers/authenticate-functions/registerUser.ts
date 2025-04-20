@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { addNewUser } from "../../services/addNewUser";
+import { addNewUser } from "../../services";
 
 const isPwdValid = (password: string): boolean => {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;

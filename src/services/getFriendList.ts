@@ -1,6 +1,7 @@
 import { User } from "../models/db";
+import { IFriend } from "../models/interface";
 
-export const getFriendList = async (userId: string): Promise<Array<Object>> => {
+export const getFriendList = async (userId: string): Promise<Array<IFriend>> => {
     try {
         const user = await User.findById(userId)
             .populate({
@@ -15,15 +16,13 @@ export const getFriendList = async (userId: string): Promise<Array<Object>> => {
 
         if (!user || !user.friendList) return [];
 
-        const friends = user.friendList.map((friendship: any) => {
+        const friends: IFriend[] = user.friendList.map((friendship: any) => {
             const isUser1 = friendship.userId1._id.toString() === userId.toString();
             const friend = isUser1 ? friendship.userId2 : friendship.userId1;
-            const debt: Number = isUser1 ? friendship.debt : -friendship.debt;
-
+            
             return {
-                _id: friend._id,
+                userId: friend._id,
                 name: friend.name,
-                debt: debt
             };
         });
 
