@@ -1,5 +1,5 @@
 import { User } from "../models/db";
-import { IFriend } from "../models/interface";
+import { IFriend } from "../models/interfaces";
 
 export const getFriendList = async (userId: string): Promise<Array<IFriend>> => {
     try {

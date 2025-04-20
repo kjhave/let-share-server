@@ -1,5 +1,5 @@
 import { FriendRequest } from "../models/db";
-import { IFriendRequest } from "../models/interface";
+import { IFriendRequest } from "../models/interfaces";
 
 export const getFriendRequestInformation = async (friendRequestId: string): Promise<IFriendRequest> => {
     try{

@@ -1,4 +1,4 @@
-import { IFriend } from "../models/interface";
+import { IFriend } from "../models/interfaces";
 import { getFriendList } from "../services";
 
 export const isFriend = async (userId1: string, userId2: string): Promise<boolean> => {
