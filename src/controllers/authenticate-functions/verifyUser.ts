@@ -3,11 +3,11 @@ import bcrypt from 'bcryptjs';
 import { getUserPassword, getUserId  } from '../../services';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET as string;
-
-if (!JWT_SECRET) {
+if (!process.env.JWT_SECRET) {
     throw new Error("Missing JWT_SECRET in environment variables.");
 }
+
+const JWT_SECRET: string = process.env.JWT_SECRET;
 
 export const verifyUser = async (req: Request, res: Response): Promise<void>  => {
     try {

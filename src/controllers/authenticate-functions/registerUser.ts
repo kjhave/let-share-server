@@ -34,6 +34,7 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
         await addNewUser(user);
     } catch (err: any) {
         res.status(400).json({ error: err.message });
+        return;
     }
 
     res.status(201).json({ message: "Success! Welcome to our apps" });

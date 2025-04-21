@@ -3,13 +3,14 @@ dotenv.config();
 
 import app from './app';
 
-const port = process.env.PORT;
 
-if (!port){
-    throw new Error("Missing PORT in environment variables.");
+if (!process.env.PORT){
+  throw new Error("Missing PORT in environment variables.");
 }
 
-//database connection
+const port = process.env.PORT;
+
+// database connection
 import connectDB from './config/db';
 connectDB();
 

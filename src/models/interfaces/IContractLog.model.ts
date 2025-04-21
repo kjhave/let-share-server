@@ -2,7 +2,7 @@ import { Document } from "mongoose";
 import { Types } from "mongoose";
 import { IContractSplitter } from "./IContractSplitter.model";
 
-export interface IContractLog extends Document {
+export interface IContractLog{
     contractName: string;
     contractDescription?: string;
     contractTotalCost: number;

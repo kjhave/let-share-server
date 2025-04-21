@@ -7,7 +7,7 @@ app.use(express.json());
 
 import { verifyPostRequest } from './middlewares/verifyPostRequest';
 import { verifyToken } from './middlewares/verifyToken';
-app.post("*", verifyPostRequest);
+app.use(verifyPostRequest);
 
 //Import routers
 import authenticationRouter from './routes/authenticationRouter';
