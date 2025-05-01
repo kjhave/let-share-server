@@ -14,6 +14,7 @@ const isUsernameValid = (username: string): boolean => {
 
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
     const user = req.body.user;
+    console.log(user);
 
     if (!isIUser(user)) {
         res.status(400).json({ message: "Missing required fields" });

@@ -1,4 +1,3 @@
-import { Document } from "mongoose";
 import { Types } from "mongoose";
 import { IContractSplitter } from "./IContractSplitter.model";
 
