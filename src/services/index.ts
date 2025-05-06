@@ -7,4 +7,5 @@ export * from './getFriendRequestInformation';
 export * from './getFriendRequestList';
 export * from './getUserId';
 export * from './getUserPassword';
+export * from './getFinancialRelationshipSet';
 export * from './removeFriendRequest';

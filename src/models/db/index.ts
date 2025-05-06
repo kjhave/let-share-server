@@ -22,4 +22,5 @@ import { IContractLog } from "../interfaces";
 export const ContractLog: Model<IContractLog> = model<IContractLog>("ContractLog", ContractLogSchema);
 
 import { FinancialRelationshipSchema } from "./financial-relationship.model";
-export const FinancialRelationship = model("FinancialRelationship", FinancialRelationshipSchema);
+import { IRelationship } from "../interfaces";
+export const FinancialRelationship: Model<IRelationship> = model<IRelationship>("FinancialRelationship", FinancialRelationshipSchema);
