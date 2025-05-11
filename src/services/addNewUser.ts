@@ -11,6 +11,7 @@ const BCRYPT_SALT_ROUNDS: number = parseInt(process.env.BCRYPT_SALT_ROUNDS, 10);
 export const addNewUser = async (user: IUser): Promise<void> => {
     const hashedPassword = await hash(user.password, BCRYPT_SALT_ROUNDS);
     try{
+        console.log("Creating user with username:", user.username);
         await User.create({
             username: user.username,
             email: user.email,

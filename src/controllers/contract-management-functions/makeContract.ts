@@ -10,7 +10,7 @@ type financialRelationshipType = IRelationship & {
     amount: number
 }
 
-const totalAmount = (contractSplitter: IContractSplitter){
+const totalAmount = (contractSplitter: IContractSplitter) => {
     const res = contractSplitter.itemList.reduce((sum: number, item: {itemName: string, itemPrice: number}) => {
         return sum + item.itemPrice;
     }, 0);
