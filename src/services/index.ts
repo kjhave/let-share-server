@@ -3,6 +3,7 @@ export * from './addNewFriend';
 export * from './addNewUser';
 export * from './getFriendList';
 export * from './getFriendRequestId';
+export * from './getUserInformation';
 export * from './getFriendRequestInformation';
 export * from './getFriendRequestList';
 export * from './getUserId';

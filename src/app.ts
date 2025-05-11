@@ -22,7 +22,3 @@ app.use("/contract", verifyToken, contactRouter);
 app.use("/groups", verifyToken, groupRouter);
 
 export default app;
-
-app.get('/test', (req, res) => {
-    res.send('Hello from the test endpoint!');
-});
