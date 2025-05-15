@@ -7,8 +7,8 @@ export const getFriendList = async (userId: string): Promise<Array<IFriend>> => 
             .populate({
                 path: "friendList",
                 populate: [
-                    { path: "userId1", select: "_id name debt" },
-                    { path: "userId2", select: "_id name debt" }
+                    { path: "userId1", select: "_id name" },
+                    { path: "userId2", select: "_id name" }
                 ]
             })
             .select("_id friendList")

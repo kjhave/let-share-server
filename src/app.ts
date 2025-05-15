@@ -2,6 +2,14 @@ import express from 'express';
 
 const app = express();
 
+// config cors
+import cors from 'cors';
+app.use(cors({
+    origin: "*",
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header'],
+}));
+
 // Middleware
 app.use(express.json());
 

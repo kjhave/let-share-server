@@ -18,9 +18,14 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction): vo
 
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
-        res.locals.user = decoded;
+        if (typeof decoded !== 'object' || !('userId' in decoded)) {
+            res.status(401).json({ message: "Invalid or expired token." });
+            return;
+        }
+
+        res.locals.user = decoded.userId;
         next();
     } catch (err) {
-        res.status(403).json({ message: "Invalid or expired token." });
+        res.status(401).json({ message: "Invalid or expired token." });
     }
 };

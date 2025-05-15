@@ -10,15 +10,6 @@ if (!process.env.PORT){
 
 const port = process.env.PORT;
 
-// config cors
-import cors from 'cors';
-app.use(cors({
-    origin: "*",
-    methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'X-Custom-Header'],
-    credentials: true
-}))
-
 // database connection
 import connectDB from './config/db';
 connectDB();
