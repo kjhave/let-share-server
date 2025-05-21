@@ -37,7 +37,7 @@ export const replyFriendRequest = async (req: Request, res: Response): Promise<v
         }
         const { userId1, userId2 } = requestInfor;
 
-        if (userId !== userId2){
+        if (userId.toString() !== userId2.toString()){
             res.status(403).json({ message: "You are not authorized to reply this friend request" });
             return;
         }
