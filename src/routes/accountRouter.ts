@@ -7,6 +7,8 @@ import { getContractLog } from '../controllers/contract-management-functions';
 
 const router = express.Router();
 
+router.get("/contactInformation/:userId", AccountManagementFunctions.getContactInformation);
+
 router.get("/profile", AccountManagementFunctions.getAccountInfor);
 
 router.post("/password_change", AccountManagementFunctions.updateAccountPassword);

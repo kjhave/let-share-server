@@ -31,8 +31,8 @@ export const sendFriendRequest = async (req: Request, res: Response): Promise<vo
         }
 
         //Check if the userId already sent a friend request to the friendId
-        const friendRequests = await getFriendRequestList(friendId) as Array<{ _id: string, name: string }>;
-        const isAlreadyRequested = friendRequests.some((request) => request._id === userId);
+        const friendRequests = await getFriendRequestList(friendId) as Array<{ id: string, name: string }>;
+        const isAlreadyRequested = friendRequests.some((request) => request.id === userId);
 
         if (isAlreadyRequested) {
             res.status(400).json({ message: "You have already sent a friend request to this user." });
@@ -40,8 +40,8 @@ export const sendFriendRequest = async (req: Request, res: Response): Promise<vo
         }
 
         //Check if the friendId already sent a friend request to the userId
-        const userRequests = await getFriendRequestList(userId) as Array<{ _id: string, name: string }>;
-        const isAlreadyRequestedByUser = userRequests.some((request) => request._id === friendId);
+        const userRequests = await getFriendRequestList(userId) as Array<{ id: string, name: string }>;
+        const isAlreadyRequestedByUser = userRequests.some((request) => request.id === friendId);
 
         if (isAlreadyRequestedByUser) {
             await addNewFriend(userId, friendId);
@@ -56,6 +56,8 @@ export const sendFriendRequest = async (req: Request, res: Response): Promise<vo
             res.status(200).json({ message: "You're already received a friend request from this user, now you are friend" });
             return;
         }
+
+        console.log("Sending friend request...");
 
         await addFriendRequest(userId, friendId);
         res.status(200).json({ message: "Friend request sent." });

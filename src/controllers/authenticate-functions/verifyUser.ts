@@ -27,7 +27,8 @@ export const verifyUser = async (req: Request, res: Response): Promise<void>  =>
 
         const userId = await getUserId(username);
         const payload = { userId };
-        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '15m' });
+        // const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '15m' });
+        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '1d' });
 
         res.status(200).json({ token });
     } catch (err) {
