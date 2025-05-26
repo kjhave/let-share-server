@@ -19,7 +19,8 @@ export const getContractLog = async (req: Request, res: Response): Promise<void>
         // } else {
         //     res.status(400).json({ message: "Invalid request" });
         // }
-        res.status(200).json({ message: "Contract logs fetched successfully" });
+        // res.status(200).json({ message: "Contract logs fetched successfully" });
+        res.status(200).json({ message: "Contract logs is underdevelopment" });
         
     } catch (err) {
         res.status(500).json({ message: "Internal server error" });

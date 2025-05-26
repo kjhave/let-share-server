@@ -15,7 +15,7 @@ export const addFinancialAmount = async (relationship: financialRelationshipType
         }
 
         if (__new__edge){
-            if (typeof relationship !== 'number')   throw new Error("Error updating financial amount");
+            if (typeof relationship.amount !== 'number')   throw new Error("Error updating financial amount");
             await FinancialRelationship.create(relationship);
         }
         else{

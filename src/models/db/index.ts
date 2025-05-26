@@ -4,9 +4,6 @@ import { UserSchema } from "./user.model";
 import { IUser } from "../interfaces";
 export const User: Model<IUser> = model<IUser>("User", UserSchema);
 
-import { FriendSchema } from "./friend.model";
-export const Friend = model("Friend", FriendSchema);
-
 import { FriendRequestSchema } from "./friend-request.model";
 import { IFriendRequest } from "../interfaces";
 export const FriendRequest: Model<IFriendRequest> = model<IFriendRequest>("FriendRequest", FriendRequestSchema);

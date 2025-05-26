@@ -6,20 +6,15 @@ export const getFriendList = async (userId: string): Promise<Array<IFriend>> => 
         const user = await User.findById(userId)
             .populate({
                 path: "friendList",
-                populate: [
-                    { path: "userId1", select: "_id name" },
-                    { path: "userId2", select: "_id name" }
-                ]
+                select: "_id name"
             })
-            .select("_id friendList")
-            .lean();
+            .select("friendList")
+            .lean()
+            .exec();
 
         if (!user || !user.friendList) return [];
 
-        const friends: IFriend[] = user.friendList.map((friendship: any) => {
-            const isUser1 = friendship.userId1._id.toString() === userId.toString();
-            const friend = isUser1 ? friendship.userId2 : friendship.userId1;
-            
+        const friends: IFriend[] = user.friendList.map((friend: any) => {
             return {
                 userId: friend._id,
                 name: friend.name,

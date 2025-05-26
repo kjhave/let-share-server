@@ -1,4 +1,4 @@
-import { Friend, User } from '../models/db';
+import { User } from '../models/db';
 import mongoose from 'mongoose';
 
 export const addNewFriend = async (userId1: string, userId2: string): Promise<void> => {
@@ -6,18 +6,14 @@ export const addNewFriend = async (userId1: string, userId2: string): Promise<vo
     session.startTransaction();
     
     try {
-        const newFriendship = await Friend.create([{ userId1, userId2 }], { session });
-
-        const friendshipId = newFriendship[0]._id;
-
         await User.updateOne(
             { _id: userId1 },
-            { $addToSet: { friendList: friendshipId } },
+            { $addToSet: { friendList: userId2 } },
             { session }
         );
         await User.updateOne(
             { _id: userId2 },
-            { $addToSet: { friendList: friendshipId } },
+            { $addToSet: { friendList: userId1 } },
             { session }
         );
 
