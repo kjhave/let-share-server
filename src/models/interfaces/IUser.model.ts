@@ -1,12 +1,10 @@
-import { Types } from "mongoose";
-
 export interface IUser{
     username: string;
     email: string;
     password: string;
     name: string;
-    friendList: Types.ObjectId[]; 
-    groupList: Types.ObjectId[];
+    friendList: string[]; 
+    groupList: string[];
     createdAt?: Date;
     updatedAt?: Date;
 };
