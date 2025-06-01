@@ -1,37 +1,87 @@
 import { FinancialRelationship } from "../models/db";
 import { IRelationship } from "../models/interfaces";
+import { startSession } from "mongoose";
 
-type financialRelationshipType = IRelationship & {
+type IFinancialRelationship = IRelationship & {
     amount: number
 }
 
-export const addFinancialAmount = async (relationship: financialRelationshipType, __new__edge: boolean): Promise<void> => {
-    try {
-        if (relationship.userId1 > relationship.userId2){
-            const tmp = relationship.userId1;
-            relationship.userId1 = relationship.userId2;
-            relationship.userId2 = tmp;
-            relationship.amount = -relationship.amount;
-        }
+const isIFinancialRelationship = (variable: any): variable is IFinancialRelationship => {
+    return (
+        variable && typeof variable === "object"
+        &&  typeof variable.userId1 === "string"
+        &&  typeof variable.userId2 === "string"
+        &&  typeof variable.amount  === "number"
+    );
+}
 
-        if (__new__edge){
-            if (typeof relationship.amount !== 'number')   throw new Error("Error updating financial amount");
-            await FinancialRelationship.create(relationship);
-        }
-        else{
-            await FinancialRelationship.updateOne({
-                    userId1: relationship.userId1,
-                    userId2: relationship.userId2
-                }, {
-                    $set: {
-                        amount: relationship.amount
-                    }
-                }
-            );
-        }
-        
-    } catch (error) {
-        console.error("Error updating financial amount:", error);
-        throw error;
+export async function addFinancialAmount(relationship: IFinancialRelationship): Promise<void>;
+export async function addFinancialAmount(relationships: IFinancialRelationship[]): Promise<void>;
+export async function addFinancialAmount(relationship: any): Promise<void>{
+    if (isIFinancialRelationship(relationship))
+        handleOne(relationship);
+    else
+        handleSet(relationship);
+}
+
+const handleOne = async (relationship: IFinancialRelationship): Promise<void> => {
+    let { userId1, userId2, amount } = relationship;
+
+    const id1Str = userId1.toString();
+    const id2Str = userId2.toString();
+
+    // Normalize order
+    if (id1Str > id2Str) {
+        [userId1, userId2] = [userId2, userId1];
+        amount = -amount;
+    }
+
+    try {
+        await FinancialRelationship.updateOne(
+            { userId1, userId2 },
+            { $inc: { amount } },
+            { upsert: true }
+        );
+    } catch(err) {
+        console.log("Error adding financial relationship:", err);
+        throw err;
+    }
+}
+
+const handleSet = async (relationships: IFinancialRelationship[]): Promise<void> => {
+    const session = await startSession();
+    session.startTransaction();
+
+    try {
+        const operations = relationships.map((rel) => {
+            let { userId1, userId2, amount } = rel;
+
+            const id1Str = userId1.toString();
+            const id2Str = userId2.toString();
+
+            // Normalize order
+            if (id1Str > id2Str) {
+                [userId1, userId2] = [userId2, userId1];
+                amount = -amount;
+            }
+
+            return {
+                updateOne: {
+                    filter: { userId1, userId2 },
+                    update: { $inc: { amount } },
+                    upsert: true,
+                },
+            };
+        });
+
+        await FinancialRelationship.bulkWrite(operations, { session });
+
+        await session.commitTransaction();
+        session.endSession();
+    } catch (err) {
+        await session.abortTransaction();
+        session.endSession();
+        console.error('Bulk financial relationship update failed:', err);
+        throw err;
     }
 }

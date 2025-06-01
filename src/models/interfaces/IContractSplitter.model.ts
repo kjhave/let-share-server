@@ -1,7 +1,5 @@
-import { Types } from "mongoose";
-
 export interface IContractSplitter{
-    userId: Types.ObjectId;
+    userId: string;
     itemList: Array<{
         itemName: string;
         itemPrice: number;

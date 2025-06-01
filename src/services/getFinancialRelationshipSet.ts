@@ -1,22 +1,26 @@
 import { FinancialRelationship } from "../models/db";
 import { IRelationship } from "../models/interfaces";
 
-type financialRelationshipType = IRelationship & {
+type IFinancialRelationship = IRelationship & {
     amount: number
 }
 
-export const getFinancialRelationship = async (relationship: IRelationship): Promise<financialRelationshipType|null> => {
+export const getFinancialRelationship = async (relationship: IRelationship): Promise<IFinancialRelationship|null> => {
     try {
-        if (relationship.userId1 > relationship.userId2){
-            const tmp = relationship.userId1;
-            relationship.userId1 = relationship.userId2;
-            relationship.userId2 = tmp;
+        let { userId1, userId2 } = relationship;
+
+        const id1Str = userId1.toString();
+        const id2Str = userId2.toString();
+
+        // Normalize order
+        if (id1Str > id2Str) {
+            [userId1, userId2] = [userId2, userId1];
         }
 
-        const res: financialRelationshipType | null = await FinancialRelationship
-                            .findOne({userId1: relationship.userId1, userId2: relationship.userId2})
+        const res: IFinancialRelationship | null = await FinancialRelationship
+                            .findOne({userId1: userId1, userId2: userId2})
                             .select("userId1 userId2 amount")
-                            .lean<financialRelationshipType>();
+                            .lean<IFinancialRelationship>();
 
         if (!res)   return null;
         return res;
