@@ -81,7 +81,7 @@ const handleSet = async (relationships: IFinancialRelationship[]): Promise<void>
     } catch (err) {
         await session.abortTransaction();
         session.endSession();
-        console.error('Bulk financial relationship update failed:', err);
+        console.error('Error updating financial relationship', err);
         throw err;
     }
 }

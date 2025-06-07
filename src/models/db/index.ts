@@ -21,3 +21,15 @@ export const ContractLog: Model<IContractLog> = model<IContractLog>("ContractLog
 import { FinancialRelationshipSchema } from "./financial-relationship.model";
 import { IRelationship } from "../interfaces";
 export const FinancialRelationship: Model<IRelationship> = model<IRelationship>("FinancialRelationship", FinancialRelationshipSchema);
+
+import { HangoutSchema } from "./hangout.model";
+export const Hangout = model("Hangout", HangoutSchema);
+
+import { HangoutInvitationSchema } from "./hangout-invitation.model";
+export const HangoutInvitation = model("HangoutInvitation", HangoutInvitationSchema);
+
+import { UserStatusSchema } from "./user-status.model";
+export const UserStatus = model("UserStatus", UserStatusSchema);
+
+import { CounterSchema } from "./counter.model";
+export const Counter = model("Counter", CounterSchema);

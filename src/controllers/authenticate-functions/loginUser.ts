@@ -9,7 +9,7 @@ if (!process.env.JWT_SECRET) {
 
 const JWT_SECRET: string = process.env.JWT_SECRET;
 
-export const verifyUser = async (req: Request, res: Response): Promise<void>  => {
+export const loginUser = async (req: Request, res: Response): Promise<void>  => {
     try {
         const { username, password } = req.body;
 

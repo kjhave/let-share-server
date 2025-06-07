@@ -21,12 +21,14 @@ app.use(verifyPostRequest);
 import authenticationRouter from './routes/authenticationRouter';
 import accountRouter        from './routes/accountRouter';
 import contactRouter        from './routes/contactRouter';
-import groupRouter          from './routes/groupRouter';
+import hangoutRouter        from './routes/hangoutRouter';
+// import groupRouter          from './routes/groupRouter';
 
 // Mount routers
 app.use("/authentication", authenticationRouter);
 app.use("/accounts", verifyToken, accountRouter);
 app.use("/contract", verifyToken, contactRouter);
-app.use("/groups", verifyToken, groupRouter);
+app.use("/hangout", verifyToken, hangoutRouter);
+// app.use("/groups", verifyToken, groupRouter);
 
 export default app;

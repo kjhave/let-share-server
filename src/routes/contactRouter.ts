@@ -1,15 +1,13 @@
 //Router for contract management functions
 
-import express, { Request, Response } from 'express';
-import { makeContract } from '../controllers/contract-management-functions/makeContract';
-import { getContractLog, getFinanciallyLinkedUserList } from '../controllers/contract-management-functions';
+import express from 'express';
+import * as ContractManagementFunctions from '../controllers/contract-management-functions';
 
 const router = express.Router();
 
-router.get("/history", getContractLog);
+router.get("/history", ContractManagementFunctions.getContractLog);
+router.get("/list", ContractManagementFunctions.getFinanciallyLinkedUserList);
 
-router.get("/list", getFinanciallyLinkedUserList);
-
-router.post("/add", makeContract);
+router.post("/add", ContractManagementFunctions.makeContract);
 
 export default router;
