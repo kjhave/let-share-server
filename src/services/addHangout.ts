@@ -27,9 +27,9 @@ export const addHangout = async ({
             contracts: []
         });
 
-        const res = await UserStatus.findByIdAndUpdate(
-            { host, hangout: false },
-            { $set: { hangout: true } },
+        const res = await UserStatus.findOneAndUpdate(
+            { userId: host, hangoutStatus: false },
+            { $set: { hangoutStatus: true, hangoutCode: code } },
             { new: false }
         );
 

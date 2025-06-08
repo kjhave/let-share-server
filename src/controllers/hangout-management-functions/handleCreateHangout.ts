@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { addHangout } from '../../services';
 
 export const handleCreateHangout = async (req: Request, res: Response): Promise<void> => {
-    const userId = res.locals.userId;
+    const userId = res.locals.user;
     const name = req.body.name;
     const description = req.body.name;
 

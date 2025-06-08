@@ -1,11 +1,15 @@
 import { UserStatus } from "../models/db";
 
-export const getUserHangoutStatus = async (userId: string): Promise<boolean> => {
+export const getUserHangoutStatus = async (userId: string): Promise<{status: boolean, code: string}> => {
     try {
-        const status = await UserStatus.findById({ userId: userId }).select("hangoutStatus").exec();
-        if (!status?.hangoutStatus) throw new Error("Error fetching user status");
+        const status = await UserStatus.findOne({ userId: userId }).select("hangoutStatus hangoutCode").exec();
+        if  (status?.hangoutStatus === undefined || status?.hangoutCode === undefined)
+            throw new Error("Error fetching user status");
         
-        return status.hangoutStatus;
+        return {
+            status: status.hangoutStatus,
+            code: status.hangoutCode || "",
+        };
     } catch(err){
         throw err;
     }

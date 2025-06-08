@@ -2,17 +2,17 @@ import { Request, Response } from 'express';
 import { getUserHangoutStatus } from '../../services';
 
 export const handleGetUserHangoutStatus = async (req: Request, res: Response) => {
-    const userCheck = req.params.userId;
-
-    if (!userCheck){
-        res.status(400).json({ message: "Invalid request"});
-        return;
-    }
+    const userId = res.locals.user;
 
     try {
-
-    } catch(err){
-        res.status(500).json({ message: "Internal server error"});
-        console.log("Error getting user hangout status", err);
+        const status = await getUserHangoutStatus(userId);
+        res.status(200).json({
+            message: "Get Hangout status successfully",
+            status: status.status,
+            code: status.code
+        });
+    } catch (err) {
+        res.status(500).json({ message: "Internal server error" });
+        console.error("Error getting hangout status: ", err);
     }
 }
