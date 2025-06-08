@@ -19,6 +19,7 @@ export const HangoutSchema = new Schema({
         }],
         default: []
     },
+    isClosed: { type: Boolean, default: false },
 }, {
     timestamps: true
 });

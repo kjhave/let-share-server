@@ -2,7 +2,7 @@
 import { Request, Response } from "express";
 import { isIContractSplitter } from "../../validations";
 import { IContractSplitter, IRelationship } from "../../models/interfaces";
-import { addFinancialAmount } from "../../services/addFinancialAmount";
+import { addFinancialAmount } from "../../services";
 
 type financialRelationshipType = IRelationship & {
     amount: number

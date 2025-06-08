@@ -30,6 +30,8 @@ const handleOne = async (relationship: IFinancialRelationship): Promise<void> =>
     const id1Str = userId1.toString();
     const id2Str = userId2.toString();
 
+    if (id1Str === id2Str)  return;
+
     // Normalize order
     if (id1Str > id2Str) {
         [userId1, userId2] = [userId2, userId1];
@@ -53,26 +55,28 @@ const handleSet = async (relationships: IFinancialRelationship[]): Promise<void>
     session.startTransaction();
 
     try {
-        const operations = relationships.map((rel) => {
-            let { userId1, userId2, amount } = rel;
+        const operations = relationships
+            .filter(rel => rel.userId1.toString() !== rel.userId2.toString())
+            .map((rel) => {
+                let { userId1, userId2, amount } = rel;
 
-            const id1Str = userId1.toString();
-            const id2Str = userId2.toString();
+                const id1Str = userId1.toString();
+                const id2Str = userId2.toString();
 
-            // Normalize order
-            if (id1Str > id2Str) {
-                [userId1, userId2] = [userId2, userId1];
-                amount = -amount;
-            }
+                // Normalize order
+                if (id1Str > id2Str) {
+                    [userId1, userId2] = [userId2, userId1];
+                    amount = -amount;
+                }
 
-            return {
-                updateOne: {
-                    filter: { userId1, userId2 },
-                    update: { $inc: { amount } },
-                    upsert: true,
-                },
-            };
-        });
+                return {
+                    updateOne: {
+                        filter: { userId1, userId2 },
+                        update: { $inc: { amount } },
+                        upsert: true,
+                    },
+                };
+            });
 
         await FinancialRelationship.bulkWrite(operations, { session });
 

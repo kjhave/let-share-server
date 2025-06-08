@@ -6,5 +6,6 @@ export const UserSchema = new Schema({
     password: { type: String, required: true },
     name: {  type: String, required: true },
     friendList: [{ type: Schema.Types.ObjectId, ref: "User" }],
-    groupList: [{ type: Schema.Types.ObjectId, ref: "Group" }]
+    groupList: [{ type: Schema.Types.ObjectId, ref: "Group" }],
+    code: { type: String, required: true, unique: true},
 });
