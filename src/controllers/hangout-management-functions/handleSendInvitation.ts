@@ -3,9 +3,9 @@ import { addHangoutInvitation } from '../../services';
 
 export const handleSendInvitation = async (req: Request, res: Response): Promise<void> => {
     const userId = res.locals.user;
-    const { hangoutId, hangoutCode, friendId } = req.body;
+    const { hangoutCode, friendId } = req.body;
 
-    if (!hangoutId || !hangoutCode || !friendId) {
+    if (!hangoutCode || !friendId) {
         res.status(400).json({ message: "Invalid Request" });
         return;
     }
@@ -18,7 +18,6 @@ export const handleSendInvitation = async (req: Request, res: Response): Promise
 
         await addHangoutInvitation({
             userId: userId,
-            hangoutId: hangoutId,
             hangoutCode: hangoutCode,
             friendId: friendId
         });

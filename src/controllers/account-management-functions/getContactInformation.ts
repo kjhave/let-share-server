@@ -9,7 +9,7 @@ export const getContactInformation = async (req: Request, res: Response): Promis
     }
     
     try {
-        const user = await getUserInformation(usercode);
+        const user = await getUserInformation({ usercode: usercode });
         if (!user) {
             res.status(404).json({ message: "User not found" });
             return;

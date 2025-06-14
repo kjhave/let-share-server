@@ -9,7 +9,7 @@ export const getAccountInfor = async (req: Request, res: Response): Promise<void
             return;
         }
 
-        const userInfor = await getUserInformation(userId);
+        const userInfor = await getUserInformation({ userId: userId });
         if (!userInfor) {
             res.status(400).json({ message: "User not found" });
             return;

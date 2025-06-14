@@ -4,12 +4,25 @@ export type userInformationType = {
     userId: string;
     name: string;
     email: string;
+    code: string;
 }
 
-export const getUserInformation = async (userId: string): Promise<userInformationType> => {
+export const getUserInformation = async ({
+    userId,
+    usercode,
+} : {
+    userId?: string;
+    usercode?: string;
+}): Promise<userInformationType> => {
     try {
-        const tmp = await User.findById(userId)
-            .select('name email')
+        if (!userId && !usercode) {
+            throw new Error("User ID or code must be provided");
+        }
+
+        const query = userId && userId != '' ? { _id: userId } : { $or: [{ _id: userId }, { code: usercode }] };
+
+        const tmp = await User.findOne({ $or: [{ _id: userId }, { code: usercode }] })
+            .select('name email code')
             .lean()
             .exec();
         
@@ -20,7 +33,8 @@ export const getUserInformation = async (userId: string): Promise<userInformatio
         const userInfor: userInformationType = {
             userId: tmp._id.toString(),
             name: tmp.name,
-            email: tmp.email
+            email: tmp.email,
+            code: tmp.code,
         }
 
         if (!userInfor) {

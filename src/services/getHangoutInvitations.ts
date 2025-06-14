@@ -1,24 +1,56 @@
 import { HangoutInvitation } from "../models/db";
 
 export interface HangoutInvitation {
-    userId1: string;
-    userId2: string;
+    userProfile: {
+        id: string,
+        name: string,
+    }
     hangoutCode: string;
+    expireAt: Date;
 }
 
-export const getHangoutInvitations = async (userId: string): Promise<HangoutInvitation[]> => {
+export const getHangoutInvitations = async (userId: string, senderId?: string): Promise<HangoutInvitation[]> => {
     try {
+        if (senderId){
+            const invitation = await HangoutInvitation
+            .findOne(
+                {
+                    userId1: senderId, 
+                    userId2: userId,
+                }
+            )
+            .select('userId1 hangoutId expireAt')
+            .lean()
+            .exec();
+
+            if (!invitation)    return [];
+            
+            return [{
+                userProfile: {
+                    id: '',
+                    name: '',
+                },
+                hangoutCode: '',
+                expireAt: invitation?.expireAt,
+            }];
+        }
+
         const invitations = await HangoutInvitation
             .find(
                 { userId2: userId }
             )
+            .populate('userId1', 'name')
             .populate('hangoutId', 'code')
+            .select('userId1 hangoutId expireAt')
             .lean<{
-                userId1: string;
-                userId2: string;
+                userId1: {
+                    _id: string,
+                    name: string
+                },
                 hangoutId: {
                     code: string;
-                }
+                },
+                expireAt: Date,
             }[]>()
             .exec();
 
@@ -27,9 +59,12 @@ export const getHangoutInvitations = async (userId: string): Promise<HangoutInvi
         }
 
         return invitations.map(invitation => ({
-            userId1: invitation.userId1.toString(),
-            userId2: invitation.userId2.toString(),
-            hangoutCode: invitation.hangoutId.code
+            userProfile: {
+                id: invitation.userId1._id.toString(),
+                name: invitation.userId1.name,
+            },
+            hangoutCode: invitation.hangoutId.code,
+            expireAt: invitation.expireAt,
         }));
     } catch (err) {
         throw err;

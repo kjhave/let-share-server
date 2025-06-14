@@ -5,11 +5,13 @@ import * as HangoutManagementFunctions from "../controllers/hangout-management-f
 
 const router = express.Router();
 
-router.get("/status", HangoutManagementFunctions.handleGetHangoutStatus);
+router.get("/participants", HangoutManagementFunctions.handleGetHangoutParticipants);
 router.get("/status/user", HangoutManagementFunctions.handleGetUserHangoutStatus);
 router.get("/invitation", HangoutManagementFunctions.handleGetInvitations);
 
 router.post("/create", HangoutManagementFunctions.handleCreateHangout);
+router.post("/join", HangoutManagementFunctions.handleJoinHangoutWithCode);
+router.post("/leave", HangoutManagementFunctions.handleLeaveHangout);
 router.post("/invitation/send", HangoutManagementFunctions.handleSendInvitation);
 router.post("/invitation/reply", HangoutManagementFunctions.handleReplyInvitation);
 

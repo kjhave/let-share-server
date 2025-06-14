@@ -16,7 +16,8 @@ export const addHangout = async ({
     session.startTransaction();
 
     try {
-        const code = await genCode("Hangout");
+        const tmp = await genCode("Hangout", 8);
+        const code = 'H' + tmp;
         
         await Hangout.create({
             name: name,

@@ -10,7 +10,7 @@ export const addHangoutInvitation = async ({
     friendId: string;
 }): Promise<void> => {
     try {
-        const hangout = await Hangout.findById(hangoutCode);
+        const hangout = await Hangout.findOne({ code: hangoutCode });
         if (!hangout) {
             throw new Error("Hangout not found");
         }
