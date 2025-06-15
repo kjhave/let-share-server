@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { isIContractSplitter } from "../../validations";
 import { IContractSplitter, IRelationship } from "../../models/interfaces";
 import { addFinancialAmount } from "../../services";
+import { addContractLog } from "../../services/addContractLog";
 
 type financialRelationshipType = IRelationship & {
     amount: number
@@ -18,8 +19,18 @@ const totalAmount = (contractSplitter: IContractSplitter) => {
 
 export const makeContract = async (req: Request, res: Response): Promise<void> => {
     const user = res.locals.user;
-    const contractPayer = req.body.contractPayer;
-    const contractSplitters = req.body.contractSplitters;
+    const {
+        contractName,
+        contractDescription,
+        contractPayer,
+        contractSplitters,
+        contractTotalCost
+    } = req.body;
+
+    if (!contractPayer || !contractTotalCost){
+        res.status(400).json({ message: "Invalid request" });
+        return;
+    }
 
     const isValidContractSplitters = Array.isArray(contractSplitters)
                                     && contractSplitters.length > 0
@@ -31,18 +42,36 @@ export const makeContract = async (req: Request, res: Response): Promise<void> =
     }
 
     try {
+        let total: number = 0;
         const updateFinancialRelationship: financialRelationshipType[] = contractSplitters.map((splitter: IContractSplitter) => {
+            const amount = totalAmount(splitter);
+            total += amount;
             return {
                 userId1: contractPayer,
                 userId2: splitter.userId,
-                amount: totalAmount(splitter)
+                amount: amount
             }
         });
+
+        if (total !== contractTotalCost){
+            res.status(400).json({ message: "Invalid request" });
+            return;
+        }
 
         if (updateFinancialRelationship.length === 1)
             await addFinancialAmount(updateFinancialRelationship[0]);
         else
             await addFinancialAmount(updateFinancialRelationship);
+
+        await addContractLog({
+            contract: {
+                contractName: contractName || "",
+                contractDescription: contractDescription || "",
+                contractPayer: contractPayer,
+                contractSplitters: contractSplitters,
+                contractTotalCost: contractTotalCost
+            }
+        });
 
         res.status(200).json({ message: "Successfully" });
     } catch (err) {
