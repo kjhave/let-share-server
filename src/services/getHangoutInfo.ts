@@ -32,17 +32,24 @@ export const getHangoutInfo = async (code: string): Promise<HangoutInfoType|null
         
         if (!hangout)    return null;
 
+        const participants = hangout.participants.map(p => {
+            return {
+                id: p._id.toString(),
+                name: p.name,
+            }
+        });
+
+        participants.push({
+            id: hangout.host._id.toString(),
+            name: hangout.host.name,
+        });
+
         return {
             host: {
                 id: hangout.host._id.toString(),
                 name: hangout.host.name,
             },
-            participants: hangout.participants.map(p => {
-                return {
-                    id: p._id.toString(),
-                    name: p.name,
-                }
-            }),
+            participants: participants,
             isClosed: hangout.isClosed,
         };
     } catch(err){

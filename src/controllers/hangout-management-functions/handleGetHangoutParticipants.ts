@@ -17,12 +17,9 @@ export const handleGetHangoutParticipants = async (req: Request, res: Response) 
             return;
         }
 
-        const participants = hangout.participants;
-        participants.push(hangout.host);
-
         res.status(200).json({
             message: "Successfully",
-            participants: participants,
+            participants: hangout.participants,
         });
     } catch(err){
         console.log("Error getting hangout participant list: ", err);

@@ -16,7 +16,7 @@ export const addContractLog = async ({
         const contractLog = await ContractLog.create(contract);
 
         if (hangoutCode && hangoutCode !== ""){
-            await Hangout.findOneAndUpdate(
+            const updatedHangout = await Hangout.findOneAndUpdate(
                 { code: hangoutCode },
                 {
                     $addToSet: {
@@ -27,6 +27,8 @@ export const addContractLog = async ({
                     }
                 }
             );
+
+            if (!updatedHangout)    throw new Error("hangout not found");
         }
     } catch(err){
         throw err;
