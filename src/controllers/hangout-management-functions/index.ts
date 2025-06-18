@@ -6,3 +6,7 @@ export * from "./handleSendInvitation";
 export * from "./handleReplyInvitation";
 export * from "./handleLeaveHangout";
 export * from "./handleJoinHangoutWithCode";
+export * from "./handleMakeContract";
+export * from "./handleGetContractStatus";
+export * from "./handleCalculateContract";
+export * from "./handleSubmitContract";

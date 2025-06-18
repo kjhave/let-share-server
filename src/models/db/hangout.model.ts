@@ -14,8 +14,22 @@ export const HangoutSchema = new Schema({
     code: { type: String, required: true },
     contracts: {
         type: [{
-            type: Schema.Types.ObjectId,
-            ref: "ContractLog"
+            contract: {
+                type: Schema.Types.ObjectId,
+                ref: "ContractLog"
+            },
+            isSubmitted: {
+                type: Boolean,
+                default: false
+            }
+        }],
+        default: []
+    },
+    relation: {
+        type: [{
+            userId1: { type: Schema.Types.ObjectId, ref: "User", require: true},
+            userId2: { type: Schema.Types.ObjectId, ref: "User", require: true},
+            amount: { type: Number, require: true },
         }],
         default: []
     },

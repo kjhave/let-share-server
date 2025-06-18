@@ -15,4 +15,9 @@ router.post("/leave", HangoutManagementFunctions.handleLeaveHangout);
 router.post("/invitation/send", HangoutManagementFunctions.handleSendInvitation);
 router.post("/invitation/reply", HangoutManagementFunctions.handleReplyInvitation);
 
+router.post("/contract/make", HangoutManagementFunctions.handleMakeContract);
+router.post("/contract/status", HangoutManagementFunctions.handleGetContractStatus);
+router.post("/contract/calculate", HangoutManagementFunctions.handleCalculateContract);
+router.post("/contract/submit", HangoutManagementFunctions.handleSubmitContract);
+
 export default router;
