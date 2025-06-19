@@ -10,6 +10,7 @@ const router = express.Router();
 router.get("/contactInformation/:usercode", AccountManagementFunctions.getContactInformation);
 router.get("/profile", AccountManagementFunctions.getAccountInfor);
 
+router.post("/contactInformations", AccountManagementFunctions.getContactInformations);
 router.post("/password_change", AccountManagementFunctions.updateAccountPassword);
 router.post("/profile/update", AccountManagementFunctions.updateAccountInfor);
 

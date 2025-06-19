@@ -16,6 +16,7 @@ export * from './getHangoutContractStatus';
 export * from './getHangoutInfo';
 export * from './getHangoutInvitations';
 export * from './getUserHangoutStatus';
+export * from './getUserContractList';
 export * from './getUserId';
 export * from './getUserInformation';
 export * from './getUserPassword';

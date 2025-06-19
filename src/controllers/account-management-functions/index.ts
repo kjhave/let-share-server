@@ -3,3 +3,4 @@ export * from "./getAccountInfor";
 export * from "./updateAccountInfor";
 export * from "./updateAccountPassword";
 export * from "./getContactInformation";
+export * from "./getContactInformations";
